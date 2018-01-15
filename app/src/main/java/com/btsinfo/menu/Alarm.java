@@ -10,7 +10,7 @@ import android.media.MediaPlayer;
  */
 
 // Ptn ça marche
-
+// oui c'est fou ketchup/20
 public class Alarm extends BroadcastReceiver {
     MediaPlayer mp;
     @Override
