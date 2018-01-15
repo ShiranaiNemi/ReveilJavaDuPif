@@ -10,6 +10,9 @@ import android.media.MediaPlayer;
  */
 
 // Ptn ça marche - PASTORE LA POTAOE AU MILEU DES FRITES
+// Ptn ça marche
+// oui c'est fou ketchup/20
+// Ptn ça marche - PASTORE LA POTATOE
 
 public class Alarm extends BroadcastReceiver {
     MediaPlayer mp;
