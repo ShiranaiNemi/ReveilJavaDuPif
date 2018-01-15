@@ -14,7 +14,7 @@ import android.media.MediaPlayer;
 // oui c'est fou ketchup/20
 // Ptn ça marche - PASTORE LA POTATOE
 // mayonnaise melba
-// Tu étais l'élu, c'était toi
+// Tu étais l'élu Anakin, c'était toi
 
 public class Alarm extends BroadcastReceiver {
     MediaPlayer mp;
