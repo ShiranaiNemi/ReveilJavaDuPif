@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.btsinfo.menu.SetAlarmeActivity">
+
+    <TimePicker
+        android:id="@+id/timeMinuteur"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/section_label"
+        android:layout_marginStart="23dp"
+        android:layout_toEndOf="@+id/section_label"
+        android:timePickerMode="spinner"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginTop="70dp"
+        android:layout_marginLeft="8dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:layout_marginRight="8dp"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintHorizontal_bias="0.616" />
+
+    <Button
+        android:id="@+id/button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/timeMinuteur"
+        android:layout_toEndOf="@+id/section_label"
+        android:text="Alarme"
+        android:layout_marginTop="92dp"
+        app:layout_constraintTop_toBottomOf="@+id/timeMinuteur"
+        android:layout_marginLeft="57dp"
+        app:layout_constraintLeft_toLeftOf="parent" />
+
+    <Button
+        android:id="@+id/btCancel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/btAlarm"
+        android:layout_alignBottom="@+id/btAlarm"
+        android:layout_alignEnd="@+id/timeMinuteur"
+        android:layout_marginRight="69dp"
+        android:layout_marginTop="92dp"
+        android:text="Annuler"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/timeMinuteur" />
+</android.support.constraint.ConstraintLayout>
