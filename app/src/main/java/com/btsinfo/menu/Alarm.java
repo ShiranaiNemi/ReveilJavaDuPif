@@ -13,6 +13,7 @@ import android.media.MediaPlayer;
 // Ptn ça marche
 // oui c'est fou ketchup/20
 // Ptn ça marche - PASTORE LA POTATOE
+// mayonnaise melba
 
 public class Alarm extends BroadcastReceiver {
     MediaPlayer mp;
