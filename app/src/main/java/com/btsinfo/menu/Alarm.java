@@ -9,7 +9,7 @@ import android.media.MediaPlayer;
  * Created by Zexenero on 29/11/2017.
  */
 
-// Ptn ça marche - PASTORE LA POTATOE
+// Ptn ça marche - PASTORE LA POTAOE AU MILEU DES FRITES
 
 public class Alarm extends BroadcastReceiver {
     MediaPlayer mp;
