@@ -12,10 +12,14 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.ListAdapter;
+import android.widget.ListView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
+import java.util.ArrayList;
 import java.util.GregorianCalendar;
 
 public class Tab1Alarme extends Fragment{
@@ -25,12 +29,28 @@ public class Tab1Alarme extends Fragment{
     AlarmManager am;
     PendingIntent pi;
     Intent intent;
+    Button btSetAlarme;
+    ListView lstAlarme;
+    ArrayList<AlarmeProg> LesAlarmeProg;
     @Override
 
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle
             savedInstanceState) {
         View rootView = inflater.inflate(R.layout.tab1alarme, container, false);
+        btSetAlarme = rootView.findViewById(R.id.btAlarm);
+        lstAlarme = rootView.findViewById(R.id.lstAlarme);
+        LesAlarmeProg = new ArrayList<AlarmeProg>();
+        AlarmeProg alarmetest = new AlarmeProg();
+
+        lstAlarme.setOnItemClickListener(new AdapterView.OnItemClickListener() { @Override
+        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+            // Nous appelons la méthode startViewActivity en lui donnant
+            // la position de l'élément sur lequel nous avons cliqué
+            startViewActivity(position);
+        }
+        });
+
         /*timer = (TimePicker) rootView.findViewById(R.id.timeMinuteur);
         timer.setIs24HourView(true);
         btAlarme = (Button) rootView.findViewById(R.id.btAlarm);
@@ -75,6 +95,13 @@ public class Tab1Alarme extends Fragment{
 
             } }) ;*/
 
+        btSetAlarme.setOnClickListener(new View.OnClickListener(){
+            public void onClick(View v){
+                Intent intent = new Intent(getContext(), SetAlarmeActivity.class) ;
+                startActivity(intent) ;
+
+            } }) ;
+
         return rootView;
     }
     /*public void setAlarm(long l){
@@ -90,5 +117,25 @@ public class Tab1Alarme extends Fragment{
     }*/
 
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        ListAdapter listeAdapter = new ListeAdapter(getContext(), LesAlarmeProg) ;
 
+        lstAlarme.setAdapter(listeAdapter) ;
+    }
+
+    private void startViewActivity(int position){
+        // On récupère l'alarme sur laquelle nous avons cliqué
+        // et nous la stockons dans la variable « uneAlarme ».
+        AlarmeProg uneAlarme = LesAlarmeProg.get(position);
+        // Nous paramétrons les coordonnées sur laquelle nous souhaitons nous rendre
+        Intent intent = new Intent(getContext(), SetAlarmeActivity.class) ;
+        // Nous passons en paramètre l'horaire
+        intent.putExtra("Horaire", uneAlarme.getHoraire());
+        // Nous passons en paramètre l'id de l'alarme ?
+        //intent.putExtra("", uneCategorie.getId());
+        // Nous changeons de page avec les 2 données passées au-dessus.
+        startActivity(intent);
+    }
 }

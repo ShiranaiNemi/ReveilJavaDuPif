@@ -23,8 +23,8 @@ import java.util.List;
 
 public class ListeAdapter extends ArrayAdapter<AlarmeProg> {
     Context context;
-    ListeAdapter(Context context, List<AlarmeProg> Sommaire) {
-        super(context, -1, Sommaire);
+    ListeAdapter(Context context, List<AlarmeProg> LesAlarmeProg) {
+        super(context, -1, LesAlarmeProg);
         this.context = context;
     }
     @Override
@@ -48,6 +48,7 @@ public class ListeAdapter extends ArrayAdapter<AlarmeProg> {
         Switch btActif = (Switch) view.findViewById(R.id.btActif);
         // Mettre le titre récupéré dans le composant « TextView »
         texteListe.setText(uneAlarme.getHoraire());
+        btActif.setChecked(uneAlarme.isActif());
         return view;}
     @Override
     public long getItemId(int position) {

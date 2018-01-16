@@ -6,13 +6,7 @@ package com.btsinfo.menu;
 
 public class AlarmeProg {
 
-    public int getActif() {
-        return actif;
-    }
 
-    public void setActif(int actif) {
-        this.actif = actif;
-    }
 
     public String getHoraire() {
         return horaire;
@@ -23,6 +17,15 @@ public class AlarmeProg {
     }
 
     String horaire;
-    int actif;
+
+    public boolean isActif() {
+        return actif;
+    }
+
+    public void setActif(boolean actif) {
+        this.actif = actif;
+    }
+
+    boolean actif;
     long id;
 }
