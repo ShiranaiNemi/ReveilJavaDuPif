@@ -9,12 +9,7 @@ import android.media.MediaPlayer;
  * Created by Zexenero on 29/11/2017.
  */
 
-// Ptn ça marche - PASTORE LA POTAOE AU MILEU DES FRITES
-// Ptn ça marche
-// oui c'est fou ketchup/20
-// Ptn ça marche - PASTORE LA POTATOE
-// mayonnaise melba
-// Tu étais l'élu Anakin, c'était toi
+
 
 public class Alarm extends BroadcastReceiver {
     MediaPlayer mp;
