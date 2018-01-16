@@ -14,7 +14,7 @@ import android.widget.Button;
 import android.widget.Chronometer;
 
 public class Tab2Chrono extends Fragment{
-    Chronometer chrono;
+    com.btsinfo.menu.Chronometer chrono;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle
             savedInstanceState) {
@@ -34,7 +34,7 @@ public class Tab2Chrono extends Fragment{
             public void onClick(View v){
                 chrono.setBase(SystemClock.elapsedRealtime());
             } }) ;
-        chrono = (Chronometer) rootView.findViewById(R.id.chrn1);
+        chrono = (com.btsinfo.menu.Chronometer) rootView.findViewById(R.id.chrn1);
         return rootView;
 
     }

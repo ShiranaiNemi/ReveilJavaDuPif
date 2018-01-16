@@ -17,6 +17,5 @@ public class Alarm extends BroadcastReceiver {
     public void onReceive(Context context, Intent intent) {
         mp = MediaPlayer.create(context, R.raw.alarm);
         mp.start();
-
     }
 }

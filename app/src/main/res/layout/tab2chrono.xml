@@ -14,15 +14,6 @@
         android:layout_height="wrap_content"
         android:text="Chronomètre"/>
 
-    <Chronometer
-        android:id="@+id/chrn1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="86dp"
-        android:textSize="36sp"
-        android:layout_below="@+id/section_label"
-        android:layout_centerHorizontal="true" />
-
     <Button
         android:id="@+id/btStart"
         android:layout_width="wrap_content"
@@ -52,5 +43,17 @@
         android:layout_marginTop="88dp"
         android:layout_below="@+id/btStart"
         android:layout_centerHorizontal="true" />
+
+    <com.btsinfo.menu.Chronometer
+        android:id="@+id/chrn1"
+        android:layout_width="200dp"
+        android:layout_height="50dp"
+        android:layout_above="@+id/btStart"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="27dp"
+        android:text="com.btsinfo.menu.Chronometer"
+        android:textAlignment="center"
+        android:textSize="30sp"
+        android:textStyle="bold" />
 
 </RelativeLayout>
