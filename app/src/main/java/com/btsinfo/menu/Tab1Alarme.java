@@ -16,10 +16,17 @@ import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListAdapter;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
+import java.io.BufferedReader;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.GregorianCalendar;
 
 public class Tab1Alarme extends Fragment{
@@ -32,6 +39,15 @@ public class Tab1Alarme extends Fragment{
     Button btSetAlarme;
     ListView lstAlarme;
     ArrayList<AlarmeProg> LesAlarmeProg;
+    String message;
+    String ligne = "";
+    ArrayList<String> tblAlarme;
+    int horaireId;
+    int alarmeHeure;
+    int alarmeActif;
+    int alarmeId;
+    int cpt;
+    String[] tempoUneAlarme = new String[3];
     @Override
 
 
@@ -97,6 +113,7 @@ public class Tab1Alarme extends Fragment{
 
         btSetAlarme.setOnClickListener(new View.OnClickListener(){
             public void onClick(View v){
+
                 Intent intent = new Intent(getContext(), SetAlarmeActivity.class) ;
                 startActivity(intent) ;
 
@@ -120,8 +137,40 @@ public class Tab1Alarme extends Fragment{
     @Override
     public void onResume() {
         super.onResume();
-        ListAdapter listeAdapter = new ListeAdapter(getContext(), LesAlarmeProg) ;
 
+        StringBuffer chaine = new StringBuffer();
+        // On lit les données enregistrée
+        try {
+            FileInputStream fichier = getContext().openFileInput("fichiersource");
+            InputStreamReader lire = new InputStreamReader(fichier);
+            BufferedReader tampon = new BufferedReader(lire);
+            cpt = 0;
+            while ((ligne = tampon.readLine()) != null){
+                // On transfert les données enregistrés
+                chaine.append(ligne+"\n");
+                tblAlarme.add(ligne);
+                cpt++;
+            }
+            for(String tempoUneAlarme: tblAlarme) // On traite les données enregistrés
+            {
+
+                //testtempoUneAlarme = tempoUneAlarme.split("!");
+                AlarmeProg uneAlarme = new AlarmeProg();
+                uneAlarme.setHoraire(tempoUneAlarme.split("!")[0]);
+                uneAlarme.setActif(Boolean.parseBoolean(tempoUneAlarme.split("!")[1]));
+                uneAlarme.setId(Long.parseLong(tempoUneAlarme.split("!")[2]));
+                LesAlarmeProg.add(uneAlarme);
+            }
+
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+
+
+        ListAdapter listeAdapter = new ListeAdapter(getContext(), LesAlarmeProg) ;
         lstAlarme.setAdapter(listeAdapter) ;
     }
 
