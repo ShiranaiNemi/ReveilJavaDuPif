@@ -14,16 +14,6 @@
         android:layout_height="wrap_content"
         android:text="Minuteur"/>
 
-    <EditText
-        android:id="@+id/time"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/section_label"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="87dp"
-        android:ems="10"
-        android:inputType="number" />
-
     <Button
         android:id="@+id/btTimer"
         android:layout_width="wrap_content"
@@ -43,5 +33,24 @@
         android:layout_alignParentEnd="true"
         android:layout_marginEnd="57dp"
         android:text="Reset" />
+
+    <TextView
+        android:id="@+id/tvMinuteur"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/btTimer"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="90dp"
+        android:textSize="36sp" />
+
+    <Spinner
+        android:id="@+id/spTimer"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/section_label"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="38dp"
+        android:drawSelectorOnTop="true"
+        android:entries="@array/minuteurPreset" />
 
 </RelativeLayout>

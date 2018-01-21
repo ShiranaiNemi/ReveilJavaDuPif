@@ -1,5 +1,19 @@
 <resources>
-    <string name="app_name">Menu</string>
+    <string name="app_name">Horloge Multi Fonction</string>
     <string name="action_settings">Settings</string>
     <string name="section_format">Hello World from section: %1$d</string>
+    <string-array name="minuteurPreset">
+        <item>20</item>
+        <item>15</item>
+        <item>10</item>
+        <item>5</item>
+        <item>2</item>
+        <item>1</item>
+    </string-array>
+
+
+
+
+
+
 </resources>
