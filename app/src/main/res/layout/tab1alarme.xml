@@ -18,10 +18,9 @@
         android:id="@+id/btAlarm"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="11dp"
-        android:text="Nouvelle alarme"
         android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true" />
+        android:layout_alignParentStart="true"
+        android:text="Nouvelle alarme" />
 
     <ListView
         android:id="@+id/lstAlarme"
@@ -30,5 +29,13 @@
         android:layout_above="@+id/btAlarm"
         android:layout_alignParentStart="true"
         android:layout_below="@+id/section_label" />
+
+    <Button
+        android:id="@+id/btClean"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:text="Purger les alarmes" />
 
 </RelativeLayout>

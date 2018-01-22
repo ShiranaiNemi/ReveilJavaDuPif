@@ -5,8 +5,11 @@ package com.btsinfo.menu;
  */
 
 import android.app.AlarmManager;
+import android.app.AlertDialog;
 import android.app.PendingIntent;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.os.Build;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -24,11 +27,14 @@ import android.widget.Toast;
 import java.io.BufferedReader;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.GregorianCalendar;
+
+import static android.content.Context.MODE_PRIVATE;
 
 public class Tab1Alarme extends Fragment{
     TimePicker timer;
@@ -39,13 +45,15 @@ public class Tab1Alarme extends Fragment{
     Intent intent;
     Button btSetAlarme;
     ListView lstAlarme;
-    ArrayList<AlarmeProg> LesAlarmeProg;
+    //ArrayList<AlarmeProg> LesAlarmeProg = new ArrayList<AlarmeProg>();
     String message;
     String ligne = "";
     ArrayList<String> tblAlarme = new ArrayList<String>();
     Switch alarmeSwitch;
     int cpt;
     String[] tempoUneAlarme = new String[3];
+    Button btPurge;
+
 
     @Override
 
@@ -55,8 +63,8 @@ public class Tab1Alarme extends Fragment{
         View rootView = inflater.inflate(R.layout.tab1alarme, container, false);
         btSetAlarme = rootView.findViewById(R.id.btAlarm);
         lstAlarme = rootView.findViewById(R.id.lstAlarme);
-        LesAlarmeProg = new ArrayList<AlarmeProg>();
         alarmeSwitch = rootView.findViewById(R.id.btActif);
+        btPurge = rootView.findViewById(R.id.btClean);
 
         lstAlarme.setOnItemClickListener(new AdapterView.OnItemClickListener() { @Override
         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -73,6 +81,43 @@ public class Tab1Alarme extends Fragment{
 
                 Intent intent = new Intent(getContext(), SetAlarmeActivity.class) ;
                 startActivity(intent) ;
+
+            } }) ;
+
+        btPurge.setOnClickListener(new View.OnClickListener(){
+            public void onClick(View v){
+
+                AlertDialog.Builder builder;
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                    builder = new AlertDialog.Builder(getContext(), android.R.style.Theme_Material_Dialog_Alert);
+                } else {
+                    builder = new AlertDialog.Builder(getContext());
+                }
+                builder.setTitle("Tout supprimer")
+                        .setMessage("Êtes vous sur de vouloir supprimer toutes les alarmes ?")
+                        .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                try {
+
+                                    String Void = "";
+                                    FileOutputStream fichierW = getActivity().openFileOutput("fichiersource",MODE_PRIVATE);
+                                    fichierW.write(Void.getBytes());
+                                    fichierW.close() ;
+
+                                } catch (FileNotFoundException e) {
+                                    e.printStackTrace();
+                                } catch (IOException e) {
+                                    e.printStackTrace();
+                                }
+                            }
+                        })
+                        .setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                // do nothing
+                            }
+                        })
+                        .setIcon(android.R.drawable.ic_dialog_alert)
+                        .show();
 
             } }) ;
 
@@ -127,20 +172,25 @@ public class Tab1Alarme extends Fragment{
     public void onResume() {
         super.onResume();
 
-        StringBuffer chaine = new StringBuffer();
+        ArrayList<AlarmeProg> LesAlarmeProg = new ArrayList<AlarmeProg>();
+        LesAlarmeProg.clear();
+
+
+
         // On lit les données enregistrée
         try {
             ligne = "";
             FileInputStream fichier = getActivity().openFileInput("fichiersource");
             InputStreamReader lire = new InputStreamReader(fichier);
             BufferedReader tampon = new BufferedReader(lire);
-            cpt = 0;
+            StringBuffer chaine = new StringBuffer();
             while ((ligne = tampon.readLine()) != null){
                 // On transfert les données enregistrés
                 chaine.append(ligne+"\n");
                 tblAlarme.add(ligne);
-                cpt++;
+
             }
+
             for(String tempoUneAlarme : tblAlarme) // On traite les données enregistrés
             {
                 AlarmeProg uneAlarme = new AlarmeProg();
@@ -166,12 +216,14 @@ public class Tab1Alarme extends Fragment{
             e.printStackTrace();
         }
 
+        tblAlarme.clear();
+        ListAdapter listeAdapter = new ListeAdapter(getActivity(), LesAlarmeProg) ;
 
-        ListAdapter listeAdapter = new ListeAdapter(getContext(), LesAlarmeProg) ;
         lstAlarme.setAdapter(listeAdapter) ;
+
     }
 
-    private void startViewActivity(int position){
+   /* private void startViewActivity(int position){
         // On récupère l'alarme sur laquelle nous avons cliqué
         // et nous la stockons dans la variable « uneAlarme ».
         AlarmeProg uneAlarme = LesAlarmeProg.get(position);
@@ -184,6 +236,6 @@ public class Tab1Alarme extends Fragment{
         // Nous passons en paramètre l'id de l'alarme ?
         //intent.putExtra("", uneCategorie.getId());
         // Nous changeons de page avec les 2 données passées au-dessus.
-        startActivity(intent);*/
-    }
+        startActivity(intent);
+    }*/
 }

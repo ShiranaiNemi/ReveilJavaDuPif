@@ -115,10 +115,11 @@ public class SetAlarmeActivity extends AppCompatActivity {
                         horaireId = 1;
                     }
                     message = horaireId.toString().concat("!1!").concat(retour) ;
-
+                    String Void = "";
                     chaine.append(message+"\n");
                     FileOutputStream fichierW = openFileOutput("fichiersource",MODE_PRIVATE);
                     fichierW.write(chaine.toString().getBytes());
+                    //fichierW.write(Void.getBytes());
                     fichierW.close() ;
                     testW = chaine.toString();
                 } catch (FileNotFoundException e) {
