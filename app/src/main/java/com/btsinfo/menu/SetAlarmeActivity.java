@@ -79,12 +79,12 @@ public class SetAlarmeActivity extends AppCompatActivity {
                     FileInputStream fichier = openFileInput("fichiersource");
                     InputStreamReader lire = new InputStreamReader(fichier);
                     BufferedReader tampon = new BufferedReader(lire);
-                    //Integer cpt = 0;
+
 
                     while ((ligne = tampon.readLine()) != null){
                         chaine.append(ligne+"\n");
                         tblId.add(ligne);
-                        //cpt++;
+
                     }
                     //testView.setText(chaine);
                     alarmeId = 0;
@@ -101,15 +101,8 @@ public class SetAlarmeActivity extends AppCompatActivity {
                         }
 
                     }
-                    /*Arrays.sort(tblId);*/
                     horaireId = alarmeId + 1;
                     message = horaireId.toString().concat("!1!").concat(retour) ;
-                    testView.setText(message);
-                    chaine.append(message+"\n");
-                    FileOutputStream fichierW = openFileOutput("fichiersource",MODE_PRIVATE);
-                    fichierW.write(chaine.toString().getBytes());
-                    fichierW.close() ;
-                    testW = chaine.toString();
 
                 } catch (FileNotFoundException e) {
                     e.printStackTrace();
@@ -133,19 +126,6 @@ public class SetAlarmeActivity extends AppCompatActivity {
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
-                /*Arrays.sort(tblId);
-                horaireId = Integer.parseInt(tblId[tblId.length - 1]) + 1;
-                message = retour + "!1!" + horaireId;
-                try {
-                    chaine.append(message+"\n");
-                    FileOutputStream fichier = openFileOutput("fichiersource",MODE_PRIVATE);
-                    fichier.write(chaine.toString().getBytes());
-                    fichier.close() ;
-                } catch (FileNotFoundException e) {
-                    e.printStackTrace();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }*/
 
                 Toast.makeText(getApplicationContext(),message, Toast.LENGTH_SHORT).show();
 

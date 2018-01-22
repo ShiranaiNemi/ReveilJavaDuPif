@@ -16,6 +16,7 @@ import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListAdapter;
 import android.widget.ListView;
+import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
@@ -42,13 +43,10 @@ public class Tab1Alarme extends Fragment{
     String message;
     String ligne = "";
     ArrayList<String> tblAlarme = new ArrayList<String>();
-    int horaireId;
-    int alarmeHeure;
-    int alarmeActif;
-    int alarmeId;
+    Switch alarmeSwitch;
     int cpt;
     String[] tempoUneAlarme = new String[3];
-    AlarmeProg uneAlarme = new AlarmeProg();
+
     @Override
 
 
@@ -58,13 +56,14 @@ public class Tab1Alarme extends Fragment{
         btSetAlarme = rootView.findViewById(R.id.btAlarm);
         lstAlarme = rootView.findViewById(R.id.lstAlarme);
         LesAlarmeProg = new ArrayList<AlarmeProg>();
-        AlarmeProg alarmetest = new AlarmeProg();
+        alarmeSwitch = rootView.findViewById(R.id.btActif);
 
         lstAlarme.setOnItemClickListener(new AdapterView.OnItemClickListener() { @Override
         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
             // Nous appelons la méthode startViewActivity en lui donnant
             // la position de l'élément sur lequel nous avons cliqué
-            startViewActivity(position);
+            Toast.makeText(getContext(),position, Toast.LENGTH_SHORT).show();
+            //startViewActivity(position);
         }
         });
 
@@ -76,6 +75,57 @@ public class Tab1Alarme extends Fragment{
                 startActivity(intent) ;
 
             } }) ;
+
+        /*StringBuffer chaine = new StringBuffer();
+        // On lit les données enregistrée
+        try {
+            ligne = "";
+            FileInputStream fichier = getActivity().openFileInput("fichiersource");
+            InputStreamReader lire = new InputStreamReader(fichier);
+            BufferedReader tampon = new BufferedReader(lire);
+            cpt = 0;
+            while ((ligne = tampon.readLine()) != null){
+                // On transfert les données enregistrés
+                chaine.append(ligne+"\n");
+                tblAlarme.add(ligne);
+                cpt++;
+            }
+            for(String tempoUneAlarme : tblAlarme) // On traite les données enregistrés
+            {
+                AlarmeProg uneAlarme = new AlarmeProg();
+                uneAlarme.setHoraire(tempoUneAlarme.split("!")[2]);
+
+                uneAlarme.setId(Long.parseLong(tempoUneAlarme.split("!")[0]));
+
+                if (tempoUneAlarme.split("!")[1].equals("1"))
+                {
+                    uneAlarme.setActif(true);
+                }
+                else
+                {
+                    uneAlarme.setActif(false);
+                }
+
+                LesAlarmeProg.add(uneAlarme);
+            }
+
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+
+        ListAdapter listeAdapter = new ListeAdapter(getContext(), LesAlarmeProg) ;
+        lstAlarme.setAdapter(listeAdapter) ;*/
+
+        return rootView;
+    }
+
+
+    @Override
+    public void onResume() {
+        super.onResume();
 
         StringBuffer chaine = new StringBuffer();
         // On lit les données enregistrée
@@ -93,9 +143,7 @@ public class Tab1Alarme extends Fragment{
             }
             for(String tempoUneAlarme : tblAlarme) // On traite les données enregistrés
             {
-
-                //testtempoUneAlarme = tempoUneAlarme.split("!");
-
+                AlarmeProg uneAlarme = new AlarmeProg();
                 uneAlarme.setHoraire(tempoUneAlarme.split("!")[2]);
 
                 uneAlarme.setId(Long.parseLong(tempoUneAlarme.split("!")[0]));
@@ -109,9 +157,6 @@ public class Tab1Alarme extends Fragment{
                     uneAlarme.setActif(false);
                 }
 
-
-
-
                 LesAlarmeProg.add(uneAlarme);
             }
 
@@ -124,55 +169,14 @@ public class Tab1Alarme extends Fragment{
 
         ListAdapter listeAdapter = new ListeAdapter(getContext(), LesAlarmeProg) ;
         lstAlarme.setAdapter(listeAdapter) ;
-
-        return rootView;
     }
-
-
-    /*@Override
-    public void onResume() {
-        super.onResume();
-
-        StringBuffer chaine = new StringBuffer();
-        // On lit les données enregistrée
-        try {
-            FileInputStream fichier = getContext().openFileInput("fichiersource");
-            InputStreamReader lire = new InputStreamReader(fichier);
-            BufferedReader tampon = new BufferedReader(lire);
-            cpt = 0;
-            while ((ligne = tampon.readLine()) != null){
-                // On transfert les données enregistrés
-                chaine.append(ligne+"\n");
-                tblAlarme.add(ligne);
-                cpt++;
-            }
-            for(String tempoUneAlarme: tblAlarme) // On traite les données enregistrés
-            {
-
-                //testtempoUneAlarme = tempoUneAlarme.split("!");
-                AlarmeProg uneAlarme = new AlarmeProg();
-                uneAlarme.setHoraire(tempoUneAlarme.split("!")[0]);
-                uneAlarme.setActif(Boolean.parseBoolean(tempoUneAlarme.split("!")[1]));
-                uneAlarme.setId(Long.parseLong(tempoUneAlarme.split("!")[2]));
-                LesAlarmeProg.add(uneAlarme);
-            }
-
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-
-
-        ListAdapter listeAdapter = new ListeAdapter(getContext(), LesAlarmeProg) ;
-        lstAlarme.setAdapter(listeAdapter) ;
-    }*/
 
     private void startViewActivity(int position){
         // On récupère l'alarme sur laquelle nous avons cliqué
         // et nous la stockons dans la variable « uneAlarme ».
         AlarmeProg uneAlarme = LesAlarmeProg.get(position);
+        Toast.makeText(getContext(),position, Toast.LENGTH_SHORT).show();
+        /*
         // Nous paramétrons les coordonnées sur laquelle nous souhaitons nous rendre
         Intent intent = new Intent(getContext(), SetAlarmeActivity.class) ;
         // Nous passons en paramètre l'horaire
@@ -180,6 +184,6 @@ public class Tab1Alarme extends Fragment{
         // Nous passons en paramètre l'id de l'alarme ?
         //intent.putExtra("", uneCategorie.getId());
         // Nous changeons de page avec les 2 données passées au-dessus.
-        startActivity(intent);
+        startActivity(intent);*/
     }
 }
