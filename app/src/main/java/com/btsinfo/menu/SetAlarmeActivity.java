@@ -20,6 +20,7 @@ import java.io.InputStreamReader;
 import java.sql.Date;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.GregorianCalendar;
 import java.util.Locale;
@@ -36,8 +37,10 @@ public class SetAlarmeActivity extends AppCompatActivity {
     String message;
     String ligne = "";
     TextView testView;
-    String tblId[] = new String[50];
-    int horaireId;
+    ArrayList<String> tblId = new ArrayList<String>();
+    Integer horaireId;
+    String testW;
+    Integer alarmeId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,26 +72,62 @@ public class SetAlarmeActivity extends AppCompatActivity {
                 DateFormat dateFormat = new SimpleDateFormat("HH:mm", Locale.FRANCE);
                 java.util.Date dateDate = cal.getTime();
                 String retour = dateFormat.format(dateDate);
-                testView.setText(retour);
+
 
                 StringBuffer chaine = new StringBuffer();
                 try {
                     FileInputStream fichier = openFileInput("fichiersource");
                     InputStreamReader lire = new InputStreamReader(fichier);
                     BufferedReader tampon = new BufferedReader(lire);
-                    int cpt = 0;
+                    //Integer cpt = 0;
+
                     while ((ligne = tampon.readLine()) != null){
                         chaine.append(ligne+"\n");
-                        tblId[cpt] = ligne.split("!")[2];
-                        cpt++;
+                        tblId.add(ligne);
+                        //cpt++;
                     }
-                    Arrays.sort(tblId);
-                    horaireId = Integer.parseInt(tblId[tblId.length - 1]) + 1;
-                    message = retour + "!1!" + horaireId;
+                    //testView.setText(chaine);
+                    alarmeId = 0;
+                    for(String tempoUneAlarme : tblId) // On traite les données enregistrés
+                    {
+                        Integer alarmeIdTest = Integer.parseInt(tempoUneAlarme.split("!")[0]);
+                        //testtempoUneAlarme = tempoUneAlarme.split("!");
+
+                        /*String alarmeHeure = tempoUneAlarme.split("!")[2];
+                        Boolean alarmeActif = Boolean.parseBoolean(tempoUneAlarme.split("!")[1]);*/
+                        if (alarmeId < alarmeIdTest)
+                        {
+                            alarmeId = alarmeIdTest;
+                        }
+
+                    }
+                    /*Arrays.sort(tblId);*/
+                    horaireId = alarmeId + 1;
+                    message = horaireId.toString().concat("!1!").concat(retour) ;
+                    testView.setText(message);
                     chaine.append(message+"\n");
                     FileOutputStream fichierW = openFileOutput("fichiersource",MODE_PRIVATE);
                     fichierW.write(chaine.toString().getBytes());
                     fichierW.close() ;
+                    testW = chaine.toString();
+
+                } catch (FileNotFoundException e) {
+                    e.printStackTrace();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                try {
+                    if (horaireId == null)
+                    {
+                        horaireId = 1;
+                    }
+                    message = horaireId.toString().concat("!1!").concat(retour) ;
+
+                    chaine.append(message+"\n");
+                    FileOutputStream fichierW = openFileOutput("fichiersource",MODE_PRIVATE);
+                    fichierW.write(chaine.toString().getBytes());
+                    fichierW.close() ;
+                    testW = chaine.toString();
                 } catch (FileNotFoundException e) {
                     e.printStackTrace();
                 } catch (IOException e) {
@@ -107,6 +146,9 @@ public class SetAlarmeActivity extends AppCompatActivity {
                 } catch (IOException e) {
                     e.printStackTrace();
                 }*/
+
+                Toast.makeText(getApplicationContext(),message, Toast.LENGTH_SHORT).show();
+
                 finish();
             }
         });
@@ -138,7 +180,7 @@ public class SetAlarmeActivity extends AppCompatActivity {
         am.setRepeating(AlarmManager.RTC_WAKEUP,l,AlarmManager.INTERVAL_DAY, pi);
 
 
-        Toast.makeText(this,"Alarme set", Toast.LENGTH_SHORT).show();
+        //Toast.makeText(this,"Alarme set", Toast.LENGTH_SHORT).show();
 
     }
 

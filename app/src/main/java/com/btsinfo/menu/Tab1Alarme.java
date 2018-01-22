@@ -41,13 +41,14 @@ public class Tab1Alarme extends Fragment{
     ArrayList<AlarmeProg> LesAlarmeProg;
     String message;
     String ligne = "";
-    ArrayList<String> tblAlarme;
+    ArrayList<String> tblAlarme = new ArrayList<String>();
     int horaireId;
     int alarmeHeure;
     int alarmeActif;
     int alarmeId;
     int cpt;
     String[] tempoUneAlarme = new String[3];
+    AlarmeProg uneAlarme = new AlarmeProg();
     @Override
 
 
@@ -67,49 +68,6 @@ public class Tab1Alarme extends Fragment{
         }
         });
 
-        /*timer = (TimePicker) rootView.findViewById(R.id.timeMinuteur);
-        timer.setIs24HourView(true);
-        btAlarme = (Button) rootView.findViewById(R.id.btAlarm);
-        btCancel = (Button) rootView.findViewById(R.id.btCancel);
-        timer.setOnTimeChangedListener(new TimePicker.OnTimeChangedListener()
-        {
-            @Override
-            public void onTimeChanged(TimePicker view, int hourOfDay, int minute) {
-                timer.setHour(hourOfDay);
-                timer.setMinute(minute);
-            }
-        });
-
-        btCancel.setOnClickListener(new View.OnClickListener(){
-            public void onClick(View v){
-                // If the alarm has been set, cancel it.
-                /*if (am!= null) {
-                    am.cancel(pi);
-                    Toast.makeText(getContext(),"Alarme ounesette",Toast.LENGTH_SHORT).show();
-
-                }
-                am = (AlarmManager) getActivity().getSystemService(getActivity().ALARM_SERVICE);
-                intent = new Intent(getActivity(), Alarm.class);
-                pi = PendingIntent.getBroadcast(getActivity(),0,intent,0);
-
-                am.cancel(pi);
-                pi.cancel();
-
-                Toast.makeText(getContext(),"Alarme ounesette",Toast.LENGTH_SHORT).show();
-            } }) ;
-        btAlarme.setOnClickListener(new View.OnClickListener(){
-            public void onClick(View v){
-                GregorianCalendar cur_cal = new GregorianCalendar();
-                cur_cal.setTimeInMillis(System.currentTimeMillis());
-                GregorianCalendar cal = new GregorianCalendar();
-                cal.set(cur_cal.get(GregorianCalendar.YEAR),
-                        cur_cal.get(GregorianCalendar.MONTH),
-                        cur_cal.get(GregorianCalendar.DAY_OF_MONTH),
-                        timer.getHour(),
-                        timer.getMinute(),0);
-                setAlarm(cal.getTimeInMillis());
-
-            } }) ;*/
 
         btSetAlarme.setOnClickListener(new View.OnClickListener(){
             public void onClick(View v){
@@ -119,22 +77,59 @@ public class Tab1Alarme extends Fragment{
 
             } }) ;
 
+        StringBuffer chaine = new StringBuffer();
+        // On lit les données enregistrée
+        try {
+            ligne = "";
+            FileInputStream fichier = getActivity().openFileInput("fichiersource");
+            InputStreamReader lire = new InputStreamReader(fichier);
+            BufferedReader tampon = new BufferedReader(lire);
+            cpt = 0;
+            while ((ligne = tampon.readLine()) != null){
+                // On transfert les données enregistrés
+                chaine.append(ligne+"\n");
+                tblAlarme.add(ligne);
+                cpt++;
+            }
+            for(String tempoUneAlarme : tblAlarme) // On traite les données enregistrés
+            {
+
+                //testtempoUneAlarme = tempoUneAlarme.split("!");
+
+                uneAlarme.setHoraire(tempoUneAlarme.split("!")[2]);
+
+                uneAlarme.setId(Long.parseLong(tempoUneAlarme.split("!")[0]));
+
+                if (tempoUneAlarme.split("!")[1].equals("1"))
+                {
+                    uneAlarme.setActif(true);
+                }
+                else
+                {
+                    uneAlarme.setActif(false);
+                }
+
+
+
+
+                LesAlarmeProg.add(uneAlarme);
+            }
+
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+
+        ListAdapter listeAdapter = new ListeAdapter(getContext(), LesAlarmeProg) ;
+        lstAlarme.setAdapter(listeAdapter) ;
+
         return rootView;
     }
-    /*public void setAlarm(long l){
-        am = (AlarmManager) getActivity().getSystemService(getActivity().ALARM_SERVICE);
-        intent = new Intent(getActivity(), Alarm.class);
-        pi = PendingIntent.getBroadcast(getActivity(),0,intent,0);
-        am.setRepeating(AlarmManager.RTC_WAKEUP,l,AlarmManager.INTERVAL_DAY, pi);
 
 
-        Toast.makeText(getContext(),"Alarme set", Toast.LENGTH_SHORT).show();
-
-
-    }*/
-
-
-    @Override
+    /*@Override
     public void onResume() {
         super.onResume();
 
@@ -172,7 +167,7 @@ public class Tab1Alarme extends Fragment{
 
         ListAdapter listeAdapter = new ListeAdapter(getContext(), LesAlarmeProg) ;
         lstAlarme.setAdapter(listeAdapter) ;
-    }
+    }*/
 
     private void startViewActivity(int position){
         // On récupère l'alarme sur laquelle nous avons cliqué

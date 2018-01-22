@@ -17,9 +17,28 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
+import android.widget.ListAdapter;
+import android.widget.ListView;
 import android.widget.TextView;
 
+import java.io.BufferedReader;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.ArrayList;
+
 public class MainActivity extends AppCompatActivity {
+
+
+    String message;
+    String ligne = "";
+    ArrayList<String> tblAlarme;
+
+    int cpt;
+    ListView lstAlarme;
+    String[] tempoUneAlarme = new String[3];
+    ArrayList<AlarmeProg> LesAlarmeProg;
 
     /**
      * The {@link android.support.v4.view.PagerAdapter} that will provide
@@ -136,5 +155,48 @@ public class MainActivity extends AppCompatActivity {
             }
             return null;
         }
+
     }
+    /*@Override
+    public void onResume() {
+        super.onResume();
+
+        StringBuffer chaine = new StringBuffer();
+        // On lit les données enregistrée
+        LesAlarmeProg = new ArrayList<AlarmeProg>();
+        try {
+            FileInputStream fichier = openFileInput("fichiersource");
+            InputStreamReader lire = new InputStreamReader(fichier);
+            BufferedReader tampon = new BufferedReader(lire);
+            cpt = 0;
+            while ((ligne = tampon.readLine()) != null){
+                // On transfert les données enregistrés
+                chaine.append(ligne+"\n");
+                tblAlarme.add(ligne);
+                cpt++;
+            }
+            for(String tempoUneAlarme: tblAlarme) // On traite les données enregistrés
+            {
+
+                //testtempoUneAlarme = tempoUneAlarme.split("!");
+                AlarmeProg uneAlarme = new AlarmeProg();
+                uneAlarme.setHoraire(tempoUneAlarme.split("!")[0]);
+                uneAlarme.setActif(Boolean.parseBoolean(tempoUneAlarme.split("!")[1]));
+                uneAlarme.setId(Long.parseLong(tempoUneAlarme.split("!")[2]));
+                LesAlarmeProg.add(uneAlarme);
+            }
+
+            lstAlarme = (ListView) findViewById(R.id.lstAlarme);
+            ListAdapter listeAdapter = new ListeAdapter(this, LesAlarmeProg);
+            lstAlarme.setAdapter(listeAdapter);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+
+
+    }*/
+
 }
