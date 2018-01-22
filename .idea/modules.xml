@@ -2,10 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://C:\Users\theoq\Documents\GitHub\ReveilJavaDuPif\ReveilJavaDuPif\Menu.iml" filepath="C:\Users\theoq\Documents\GitHub\ReveilJavaDuPif\ReveilJavaDuPif\Menu.iml" />
-      <module fileurl="file://D:\AndroidProject\ReveilJavaDuPif\Menu.iml" filepath="D:\AndroidProject\ReveilJavaDuPif\Menu.iml" />
       <module fileurl="file://$PROJECT_DIR$/ReveilJavaDuPif.iml" filepath="$PROJECT_DIR$/ReveilJavaDuPif.iml" />
-      <module fileurl="file://D:\AndroidProject\Menu\ReveilJavaDuPif.iml" filepath="D:\AndroidProject\Menu\ReveilJavaDuPif.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
     </modules>
   </component>
