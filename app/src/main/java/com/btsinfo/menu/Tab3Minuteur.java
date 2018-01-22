@@ -4,6 +4,7 @@ package com.btsinfo.menu;
  * Created by Zexenero on 29/11/2017.
  */
 
+import android.media.MediaPlayer;
 import android.os.CountDownTimer;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
@@ -25,6 +26,7 @@ public class Tab3Minuteur extends Fragment {
     //EditText time;
     TextView minuteur;
     Spinner presetMinuteur;
+    MediaPlayer mp;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle
             savedInstanceState) {
@@ -74,6 +76,8 @@ public class Tab3Minuteur extends Fragment {
             @Override
             public void onFinish() {
                 //A la fin du décompte on change le nombre par « Fini »
+                mp = MediaPlayer.create(getContext(), R.raw.minuteur);
+                mp.start();
                 minuteur.setText("Fini");
             }
         }.start(); //On lance le compte-à-rebours
