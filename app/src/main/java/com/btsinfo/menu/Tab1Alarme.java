@@ -98,12 +98,11 @@ public class Tab1Alarme extends Fragment{
                         .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int which) {
                                 try {
-
                                     String Void = "";
                                     FileOutputStream fichierW = getActivity().openFileOutput("fichiersource",MODE_PRIVATE);
                                     fichierW.write(Void.getBytes());
                                     fichierW.close() ;
-
+                                    lstAlarme.clearChoices();
                                 } catch (FileNotFoundException e) {
                                     e.printStackTrace();
                                 } catch (IOException e) {
